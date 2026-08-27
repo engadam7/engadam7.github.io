@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="so">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eng.Adam — Developer</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+  :root{
+    --bg: #150f1f;
+    --bg-soft: #1d1630;
+    --panel: #221a38;
+    --cyan: #4ff0e0;
+    --coral: #ff6b7a;
+    --amber: #ffc35c;
+    --text: #f3f0fb;
+    --text-dim: #a99fc4;
+    --line: #372a56;
+  }
+
+  *{ box-sizing: border-box; margin:0; padding:0; }
+  html{ scroll-behavior: smooth; }
+
+  body{
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  body::before{
+    content:'';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(circle at 15% 20%, rgba(79,240,224,0.10), transparent 40%),
+      radial-gradient(circle at 85% 70%, rgba(255,107,122,0.10), transparent 45%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  h1, h2, h3, .display{ font-family: 'Space Grotesk', sans-serif; letter-spacing: -0.02em; }
+  code, .mono{ font-family: 'JetBrains Mono', monospace; }
+  a{ color: inherit; text-decoration: none; }
+  ::selection{ background: var(--cyan); color: var(--bg); }
+
+  .wrap{ max-width: 880px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+
+  nav{
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(21,15,31,0.85);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  nav .wrap{ display:flex; align-items:center; justify-content: space-between; padding: 16px 24px; }
+  .brand{ font-family:'JetBrains Mono', monospace; font-weight: 700; font-size: 1rem; color: var(--cyan); }
+  .brand span{ color: var(--text-dim); }
+  .navlinks{ display:flex; gap: 22px; font-family:'JetBrains Mono', monospace; font-size: 0.85rem; color: var(--text-dim); }
+  .navlinks a:hover{ color: var(--coral); }
+  .navlinks a::before{ content:'./'; color: var(--line); }
+
+  .term{
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 20px 50px -20px rgba(0,0,0,0.6);
+  }
+  .term-bar{
+    display:flex; align-items:center; gap:8px;
+    padding: 10px 14px;
+    background: rgba(255,255,255,0.03);
+    border-bottom: 1px solid var(--line);
+  }
+  .term-bar .dot{ width:10px; height:10px; border-radius:50%; }
+  .dot.r{ background:#ff6b7a; }
+  .dot.y{ background:#ffc35c; }
+  .dot.g{ background:#4ff0e0; }
+  .term-title{ margin-left:8px; font-family:'JetBrains Mono',monospace; font-size:0.75rem; color: var(--text-dim); }
+  .term-body{ padding: 22px 24px; font-family:'JetBrains Mono', monospace; font-size: 0.92rem; }
+  .term-body .prompt{ color: var(--cyan); }
+  .term-body .comment{ color: var(--text-dim); }
+
+  .hero{ padding: 70px 0 60px; }
+  .eyebrow{ font-family:'JetBrains Mono', monospace; color: var(--amber); font-size: 0.8rem; letter-spacing: 0.08em; margin-bottom: 18px; }
+  .hero h1{ font-size: clamp(2.2rem, 7vw, 3.6rem); line-height: 1.05; margin-bottom: 18px; }
+  .hero h1 .accent{ color: var(--cyan); }
+  .hero p.lead{ color: var(--text-dim); font-size: 1.05rem; max-width: 55ch; margin-bottom: 34px; }
+  .cta-row{ display:flex; gap: 14px; flex-wrap: wrap; margin-bottom: 46px; }
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding: 12px 20px; border-radius: 8px;
+    font-family:'JetBrains Mono', monospace; font-size: 0.85rem; font-weight: 500;
+    border: 1px solid var(--line);
+    transition: transform 0.15s ease, border-color 0.15s ease;
+  }
+  .btn:hover{ transform: translateY(-2px); }
+  .btn.primary{ background: var(--cyan); color: var(--bg); border-color: var(--cyan); }
+  .btn.primary:hover{ background: #6ff5e8; }
+  .btn.ghost{ color: var(--text); }
+  .btn.ghost:hover{ border-color: var(--coral); color: var(--coral); }
+
+  .type-cursor{
+    display:inline-block; width: 9px; height: 1.1em; background: var(--coral);
+    margin-left: 4px; vertical-align: -2px;
+    animation: blink 1s step-end infinite;
+  }
+  @keyframes blink{ 50%{ opacity:0; } }
+
+  section{ padding: 60px 0; border-top: 1px solid var(--line); }
+  .sec-head{ display:flex; align-items:baseline; gap: 12px; margin-bottom: 34px; }
+  .sec-head .tag{ font-family:'JetBrains Mono',monospace; color: var(--text-dim); font-size: 0.85rem; }
+  .sec-head h2{ font-size: 1.6rem; }
+
+  .about-grid{ display:grid; grid-template-columns: 1fr; gap: 28px; }
+  .stack-row{ display:flex; flex-wrap:wrap; gap: 10px; margin-top: 22px; }
+  .pill{
+    font-family:'JetBrains Mono',monospace; font-size: 0.8rem;
+    padding: 7px 13px; border-radius: 999px;
+    border: 1px solid var(--line); color: var(--text-dim); background: var(--bg-soft);
+  }
+
+  .projects{ display:grid; grid-template-columns: 1fr; gap: 20px; }
+  .proj{
+    background: var(--bg-soft); border: 1px solid var(--line);
+    border-radius: 10px; padding: 24px;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+  }
+  .proj:hover{ border-color: var(--cyan); transform: translateY(-3px); }
+  .proj-top{ display:flex; justify-content:space-between; align-items:flex-start; gap: 12px; margin-bottom: 10px; }
+  .proj h3{ font-size: 1.15rem; }
+  .proj .idx{ font-family:'JetBrains Mono',monospace; color: var(--line); font-size: 0.85rem; }
+  .proj p{ color: var(--text-dim); font-size: 0.95rem; margin-bottom: 14px; }
+  .tagrow{ display:flex; gap: 8px; flex-wrap: wrap; }
+  .tagrow span{
+    font-family:'JetBrains Mono',monospace; font-size: 0.72rem; color: var(--amber);
+    border: 1px solid rgba(255,195,92,0.3); padding: 3px 8px; border-radius: 5px;
+  }
+
+  .contact-links{ display:flex; flex-direction: column; gap: 14px; margin-top: 24px; }
+  .contact-links a{
+    display:flex; align-items:center; justify-content:space-between;
+    padding: 16px 18px; background: var(--bg-soft); border: 1px solid var(--line);
+    border-radius: 8px; font-family:'JetBrains Mono',monospace; font-size: 0.9rem;
+    transition: border-color 0.15s ease, padding-left 0.15s ease;
+  }
+  .contact-links a:hover{ border-color: var(--coral); padding-left: 22px; }
+  .contact-links .arrow{ color: var(--text-dim); }
+
+  footer{ padding: 34px 0 50px; text-align:center; color: var(--text-dim); font-family:'JetBrains Mono',monospace; font-size: 0.78rem; }
+
+  @media (min-width: 700px){
+    .about-grid{ grid-template-columns: 1.1fr 0.9fr; }
+    .projects{ grid-template-columns: 1fr 1fr; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior: auto; }
+    .type-cursor{ animation: none; }
+    .proj, .btn{ transition: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand">~/<span>Eng.Adam</span></div>
+    <div class="navlinks">
+      <a href="#about">about</a>
+      <a href="#projects">projects</a>
+      <a href="#contact">contact</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <section class="hero">
+    <div class="eyebrow">// software developer</div>
+    <h1>Waxaan dhisaa <span class="accent">apps</span> oo shaqeeya, oo bilan.</h1>
+    <p class="lead">Magacaygu waa <strong>Eng.Adam</strong> — waxaan qoraa koodh, waxaan dhisaa alaabo dijitaal ah, oo waxaan jeclahay in aan wax cusub baro maalin walba.</p>
+
+    <div class="cta-row">
+      <a href="#projects" class="btn primary">Arag shaqooyinkayga →</a>
+      <a href="#contact" class="btn ghost">Nala soo xiriir</a>
+    </div>
+
+    <div class="term">
+      <div class="term-bar">
+        <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+        <span class="term-title">about-me.sh</span>
+      </div>
+      <div class="term-body">
+        <div><span class="prompt">$</span> whoami</div>
+        <div class="comment">&gt; developer, ma-baraye, curiyaha alaabta</div>
+        <div style="margin-top:10px;"><span class="prompt">$</span> cat skills.txt</div>
+        <div class="comment">&gt; Python · JavaScript · HTML/CSS · Git</div>
+        <div style="margin-top:10px;"><span class="prompt">$</span> status<span class="type-cursor"></span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="sec-head">
+      <span class="tag">01</span>
+      <h2>Ku saabsan aniga</h2>
+    </div>
+    <div class="about-grid">
+      <div>
+        <p style="color:var(--text-dim);">
+          Waxaan ku dhaqmaa dunida software-ka, iyadoo aan diiradda saarayo dhisidda alaabo fudud, faa'iido leh, oo isticmaale-ku-jecel. Aad ayaan u jeclahay inaan barto tignoolajiyad cusub, kadibna aan ku dhiso mashruuc dhab ah.
+        </p>
+        <p style="color:var(--text-dim); margin-top:14px;">
+          Halkan waxaad ka arki kartaa shaqooyinkayga, xirfadahayga, iyo sida aad iila soo xiriiri karto haddii aad rabto in aan wax kaa caawiyo ama aan iskaashan.
+        </p>
+      </div>
+      <div class="term">
+        <div class="term-bar">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="term-title">stack.json</span>
+        </div>
+        <div class="term-body">
+          <div class="stack-row">
+            <span class="pill">Python</span>
+            <span class="pill">JavaScript</span>
+            <span class="pill">HTML</span>
+            <span class="pill">CSS</span>
+            <span class="pill">Git & GitHub</span>
+            <span class="pill">Kivy</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="sec-head">
+      <span class="tag">02</span>
+      <h2>Shaqooyinkayga</h2>
+    </div>
+    <div class="projects">
+      <div class="proj">
+        <div class="proj-top">
+          <h3>Mashruuc #1</h3>
+          <span class="idx">01</span>
+        </div>
+        <p>Sharaxaad gaaban oo ku saabsan mashruucan — waxa uu qabto, dhibaatada uu xalliyo, iyo sida uu u shaqeeyo.</p>
+        <div class="tagrow"><span>Python</span><span>Kivy</span></div>
+      </div>
+      <div class="proj">
+        <div class="proj-top">
+          <h3>Mashruuc #2</h3>
+          <span class="idx">02</span>
+        </div>
+        <p>Sharaxaad gaaban oo ku saabsan mashruucan — waxa uu qabto, dhibaatada uu xalliyo, iyo sida uu u shaqeeyo.</p>
+        <div class="tagrow"><span>HTML</span><span>CSS</span><span>JS</span></div>
+      </div>
+      <div class="proj">
+        <div class="proj-top">
+          <h3>Mashruuc #3</h3>
+          <span class="idx">03</span>
+        </div>
+        <p>Sharaxaad gaaban oo ku saabsan mashruucan — waxa uu qabto, dhibaatada uu xalliyo, iyo sida uu u shaqeeyo.</p>
+        <div class="tagrow"><span>Python</span></div>
+      </div>
+      <div class="proj">
+        <div class="proj-top">
+          <h3>Mashruuc #4</h3>
+          <span class="idx">04</span>
+        </div>
+        <p>Sharaxaad gaaban oo ku saabsan mashruucan — waxa uu qabto, dhibaatada uu xalliyo, iyo sida uu u shaqeeyo.</p>
+        <div class="tagrow"><span>API</span><span>JS</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="sec-head">
+      <span class="tag">03</span>
+      <h2>Nala soo xiriir</h2>
+    </div>
+    <p style="color:var(--text-dim); max-width:55ch;">Haddii aad rabto inaad wax iska weydiiso, ama aad jeceshahay inaan wada shaqeyno mashruuc — fariin ii soo dir.</p>
+    <div class="contact-links">
+      <a href="mailto:eng.adam@example.com">
+        <span>email — eng.adam@example.com</span>
+        <span class="arrow">→</span>
+      </a>
+      <a href="https://github.com/fanprojproduction693-gif" target="_blank" rel="noopener">
+        <span>github — /fanprojproduction693-gif</span>
+        <span class="arrow">→</span>
+      </a>
+      <a href="#">
+        <span>linkedin — /in/Eng.Adam</span>
+        <span class="arrow">→</span>
+      </a>
+    </div>
+  </section>
+
+  <footer>
+    built with <span style="color:var(--coral);">♥</span> by Eng.Adam — © 2026
+  </footer>
+
+</div>
+
+</body>
+</html>
