@@ -162,7 +162,15 @@
     html{ scroll-behavior: auto; }
     .type-cursor{ animation: none; }
     .proj, .btn{ transition: none; }
-  }
+  } .posts{ display:grid; grid-template-columns: 1fr; gap: 18px; }
+.post{
+  background: var(--bg-soft); border: 1px solid var(--line);
+  border-radius: 10px; padding: 22px;
+}
+.post h3{ font-size: 1.1rem; margin-bottom: 8px; }
+.post .date{ font-family:'JetBrains Mono',monospace; font-size: 0.75rem; color: var(--amber); margin-bottom: 10px; display:block; }
+.post p{ color: var(--text-dim); font-size: 0.95rem; }
+@media (min-width: 700px){ .posts{ grid-template-columns: 1fr 1fr; } }
 </style>
 </head>
 <body>
